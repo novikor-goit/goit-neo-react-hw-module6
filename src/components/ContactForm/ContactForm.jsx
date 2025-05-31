@@ -1,10 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useId } from 'react';
 import css from './ContactForm.module.css';
-import PropTypes from 'prop-types';
 import * as Yup from 'yup';
+import { addContact } from '../../redux/contactsSlice.js';
+import { useDispatch } from 'react-redux';
 
-export default function ContactForm({ onSubmit }) {
+export default function ContactForm() {
+  const dispatch = useDispatch();
   const initialValues = {
     name: '',
     number: ''
@@ -15,8 +17,7 @@ export default function ContactForm({ onSubmit }) {
   const requiredField = Yup.string().trim().required().min(3).max(50);
 
   const handleSubmit = (values, actions) => {
-    values = { ...values, id: crypto.randomUUID() };
-    onSubmit(values);
+    dispatch(addContact(values));
     actions.resetForm();
   };
 
@@ -48,7 +49,3 @@ export default function ContactForm({ onSubmit }) {
     </section>
   );
 }
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
-};

@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 import css from './Contact.module.css';
 import { IoIosCall, IoMdPerson } from 'react-icons/io';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from '../../redux/contactsSlice.js';
 
-export function Contact({ name, number, deleteAction }) {
+export function Contact({ name, number, id }) {
+  const dispatch = useDispatch();
+
   return (
     <div className={css.contactContainer}>
       <div>
@@ -15,7 +19,7 @@ export function Contact({ name, number, deleteAction }) {
           &nbsp;{number}
         </div>
       </div>
-      <button type="button" className={css.button} onClick={deleteAction}>
+      <button type="button" className={css.button} onClick={() => dispatch(deleteContact(id))}>
         Delete
       </button>
     </div>
@@ -25,5 +29,5 @@ export function Contact({ name, number, deleteAction }) {
 Contact.propTypes = {
   name: PropTypes.string.isRequired,
   number: PropTypes.string.isRequired,
-  deleteAction: PropTypes.func.isRequired
+  id: PropTypes.string.isRequired
 };
