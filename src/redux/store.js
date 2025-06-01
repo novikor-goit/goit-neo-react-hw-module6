@@ -13,7 +13,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
-const store = configureStore({
+export const store = configureStore({
   reducer: persistReducer(
     {
       key: 'root',
@@ -32,6 +32,4 @@ const store = configureStore({
     })
 });
 
-persistStore(store);
-
-export default store;
+export const persistor = persistStore(store);
